@@ -27,17 +27,20 @@ app.post("/webhook", (req, res) => {
   if (!event) return res.sendStatus(200);
 
   const sender = event.sender.id;
-  const text = event.message?.text;
 
-  if (text) {
-    sendText(
-      sender,
-      "🍍 สวัสดีครับ SF Season Fruit\nพิมพ์:\n- ราคา\n- สั่งซื้อ\n- ติดต่อ"
-    );
+  // ถ้าเป็นข้อความ
+  if (event.message?.text) {
+    sendQuickMenu(sender);
+  }
+
+  // ถ้าเป็นการกดปุ่ม
+  if (event.postback?.payload) {
+    handlePostback(sender, event.postback.payload);
   }
 
   res.sendStatus(200);
 });
+
 
 function sendText(psid, text) {
   axios.post(
@@ -52,3 +55,33 @@ function sendText(psid, text) {
 app.listen(process.env.PORT || 3000, () => {
   console.log("Bot is running");
 });
+function sendQuickMenu(psid) {
+  axios.post(
+    `https://graph.facebook.com/v19.0/me/messages?access_token=${PAGE_TOKEN}`,
+    {
+      recipient: { id: psid },
+      message: {
+        text: "🍍 SF Season Fruit\nเลือกเมนูได้เลยครับ",
+        quick_replies: [
+          { content_type: "text", title: "📦 ราคา", payload: "PRICE" },
+          { content_type: "text", title: "🛒 สั่งซื้อ", payload: "ORDER" },
+          { content_type: "text", title: "📞 ติดต่อ", payload: "CONTACT" }
+        ]
+      }
+    }
+  );
+}
+
+function handlePostback(psid, payload) {
+  let text = "";
+
+  if (payload === "PRICE") {
+    text = "📦 ราคาสับปะรดภูแล\nกล่องละ XXX บาท\nสดใหม่วันต่อวัน 🍍";
+  } else if (payload === "ORDER") {
+    text = "🛒 สั่งซื้อได้ที่ Inbox หรือ Line: 062-404-3999";
+  } else if (payload === "CONTACT") {
+    text = "📞 ติดต่อเรา\nLine: 062-404-3999\nFB: SF Season Fruit";
+  }
+
+  sendText(psid, text);
+}
