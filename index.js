@@ -29,7 +29,7 @@ app.post("/webhook", (req, res) => {
   const sender = event.sender.id;
 
   // ถ้าเป็นข้อความ
-  if (event.message.text) {
+  if (event.message) {
   sendQuickMenu(sender);
 }
 
