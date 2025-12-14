@@ -33,10 +33,10 @@ app.post("/webhook", (req, res) => {
     sendQuickMenu(sender);
   }
 
-  // ถ้าเป็นการกดปุ่ม
-  if (event.postback?.payload) {
-    handlePostback(sender, event.postback.payload);
-  }
+  // ถ้าเป็น Quick Reply
+if (event.message?.quick_reply?.payload) {
+  handlePostback(sender, event.message.quick_reply.payload);
+}
 
   res.sendStatus(200);
 });
