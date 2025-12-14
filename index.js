@@ -61,16 +61,17 @@ function sendQuickMenu(psid) {
     {
       recipient: { id: psid },
       message: {
-        text: "🍍 SF Season Fruit\nเลือกเมนูได้เลยครับ",
+        text: "🍍 ยินดีต้อนรับสู่ SF Season Fruit\nสับปะรดภูแลแท้ จากเชียงราย\n\nเลือกเมนูที่สนใจได้เลยครับ 👇",
         quick_replies: [
-          { content_type: "text", title: "📦 ราคา", payload: "PRICE" },
-          { content_type: "text", title: "🛒 สั่งซื้อ", payload: "ORDER" },
-          { content_type: "text", title: "📞 ติดต่อ", payload: "CONTACT" }
+          { content_type: "text", title: "💰 ดูราคา", payload: "PRICE" },
+          { content_type: "text", title: "🛒 สั่งซื้อสินค้า", payload: "ORDER" },
+          { content_type: "text", title: "📞 ติดต่อร้าน", payload: "CONTACT" }
         ]
       }
     }
   );
 }
+
 
 function handlePostback(psid, payload) {
   let text = "";
