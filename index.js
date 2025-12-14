@@ -21,9 +21,12 @@ app.get("/webhook", (req, res) => {
 });
 
 // รับข้อความจาก Messenger
-app.post("/webhook", (req, res) => {
-  const entry = req.body.entry?.[0];
-  const event = entry?.messaging?.[0];
+app.post('/webhook', (req, res) => {
+  const entry = req.body.entry[0];
+  const event = entry.messaging[0];
+
+  console.log("EVENT FROM FACEBOOK >>>", JSON.stringify(event, null, 2));
+
   if (!event) return res.sendStatus(200);
 
   const sender = event.sender.id;
