@@ -32,9 +32,10 @@ app.post('/webhook', (req, res) => {
   const sender = event.sender.id;
 
   // ถ้าเป็นข้อความ
-  if (event.message) {
+  if (event.message && !event.message.quick_reply) {
   sendQuickMenu(sender);
 }
+
 
   // ถ้าเป็น Quick Reply
 if (event.message?.quick_reply?.payload) {
