@@ -29,9 +29,12 @@ app.post("/webhook", (req, res) => {
   const sender = event.sender.id;
 
   // ถ้าเป็นข้อความ
-  if (event.message?.text) {
-    sendQuickMenu(sender);
-  }
+  if (event.message.text) {
+  sendText(
+    sender,
+    "🍍 สวัสดีค่ะ ยินดีต้อนรับ SF Season Fruit\nเลือกเมนูด้านล่างได้เลยค่ะ 👇"
+  );
+}
 
   // ถ้าเป็น Quick Reply
 if (event.message?.quick_reply?.payload) {
